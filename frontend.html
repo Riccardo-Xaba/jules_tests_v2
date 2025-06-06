@@ -1,0 +1,252 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700"
+    />
+
+    <title>Stitch Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f3f4] px-10 py-3">
+          <div class="flex items-center gap-4 text-[#111518]">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path></svg>
+            </div>
+            <h2 class="text-[#111518] text-lg font-bold leading-tight tracking-[-0.015em]">Matrix Calculator</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <div class="flex items-center gap-9">
+              <a class="text-[#111518] text-sm font-medium leading-normal" href="#">Home</a>
+              <a class="text-[#111518] text-sm font-medium leading-normal" href="#">About</a>
+              <a class="text-[#111518] text-sm font-medium leading-normal" href="#">Contact</a>
+            </div>
+            <button
+              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f0f3f4] text-[#111518] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+            >
+              <div class="text-[#111518]" data-icon="Question" data-size="20px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBp3ix-8nfsqA41_XWuvbIa6q-pXmLnUl1oYISAudd6SpxB4MsBbdrQ30HMCDpjoEpqGShaAa-SlxwyvsyqoShbyrvdbuXGsJl-ewcE8OT2RmJsJ-h-guQJwAoE9WMJy1TqhKOWQOfVLeGdJmS6-D9qCqq43MnUUWD1VOnXLD-YWHdIt_HiJxrdMHa7I4JBtvmmJNopv42TgIxTHxQECQkwOqa_2qk3XffJheva2V9r_sVV3ITRN1TwBolsX6Eap5ok6tB0AnAkSKpw");'
+            ></div>
+          </div>
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1">
+            <div class="flex flex-wrap justify-between gap-3 p-4">
+              <p class="text-[#111518] tracking-light text-[32px] font-bold leading-tight min-w-72">Homogeneous Transformation Matrix</p>
+            </div>
+            <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+              <label class="flex flex-col min-w-40 flex-1">
+                <p class="text-[#111518] text-base font-medium leading-normal pb-2">X Position</p>
+                <input
+                  id="x-pos"
+                  placeholder="Enter X"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border border-[#dce1e5] bg-white focus:border-[#dce1e5] h-14 placeholder:text-[#637988] p-[15px] text-base font-normal leading-normal"
+                  value="10"
+                />
+              </label>
+              <label class="flex flex-col min-w-40 flex-1">
+                <p class="text-[#111518] text-base font-medium leading-normal pb-2">Y Position</p>
+                <input
+                  id="y-pos"
+                  placeholder="Enter Y"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border border-[#dce1e5] bg-white focus:border-[#dce1e5] h-14 placeholder:text-[#637988] p-[15px] text-base font-normal leading-normal"
+                  value="20"
+                />
+              </label>
+            </div>
+            <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+              <label class="flex flex-col min-w-40 flex-1">
+                <p class="text-[#111518] text-base font-medium leading-normal pb-2">Z Position</p>
+                <input
+                  id="z-pos"
+                  placeholder="Enter Z"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border border-[#dce1e5] bg-white focus:border-[#dce1e5] h-14 placeholder:text-[#637988] p-[15px] text-base font-normal leading-normal"
+                  value="30"
+                />
+              </label>
+            </div>
+            <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+              <label class="flex flex-col min-w-40 flex-1">
+                <p class="text-[#111518] text-base font-medium leading-normal pb-2">rX (Euler Angle)</p>
+                <input
+                  id="rx"
+                  placeholder="Enter rX"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border border-[#dce1e5] bg-white focus:border-[#dce1e5] h-14 placeholder:text-[#637988] p-[15px] text-base font-normal leading-normal"
+                  value="90"
+                />
+              </label>
+              <label class="flex flex-col min-w-40 flex-1">
+                <p class="text-[#111518] text-base font-medium leading-normal pb-2">rY (Euler Angle)</p>
+                <input
+                  id="ry"
+                  placeholder="Enter rY"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border border-[#dce1e5] bg-white focus:border-[#dce1e5] h-14 placeholder:text-[#637988] p-[15px] text-base font-normal leading-normal"
+                  value="0"
+                />
+              </label>
+            </div>
+            <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+              <label class="flex flex-col min-w-40 flex-1">
+                <p class="text-[#111518] text-base font-medium leading-normal pb-2">rZ (Euler Angle)</p>
+                <input
+                  id="rz"
+                  placeholder="Enter rZ"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border border-[#dce1e5] bg-white focus:border-[#dce1e5] h-14 placeholder:text-[#637988] p-[15px] text-base font-normal leading-normal"
+                  value="0"
+                />
+              </label>
+            </div>
+            <div class="flex px-4 py-3 justify-end">
+              <button
+                id="calculate-btn"
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#1993e5] text-white text-sm font-bold leading-normal tracking-[0.015em]"
+              >
+                <span class="truncate">Calculate Matrix</span>
+              </button>
+            </div>
+            <h3 class="text-[#111518] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Resulting Matrix</h3>
+            <div class="px-4 py-3 @container">
+              <div class="flex overflow-hidden rounded-lg border border-[#dce1e5] bg-white">
+                <table class="flex-1" id="result-table">
+                  <thead>
+                    <tr class="bg-white">
+                      <th class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-120 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal"></th>
+                      <th class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-240 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">X</th>
+                      <th class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-360 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">Y</th>
+                      <th class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-480 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">Z</th>
+                      <th class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-600 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">
+                        Translation
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-t border-t-[#dce1e5]">
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-120 h-[72px] px-4 py-2 w-[400px] text-[#111518] text-sm font-normal leading-normal">X</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-240 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">1.0000</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-360 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">0.0000</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-480 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">0.0000</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-600 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">0.0000</td>
+                    </tr>
+                    <tr class="border-t border-t-[#dce1e5]">
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-120 h-[72px] px-4 py-2 w-[400px] text-[#111518] text-sm font-normal leading-normal">Y</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-240 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">0.0000</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-360 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">1.0000</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-480 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">0.0000</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-600 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">0.0000</td>
+                    </tr>
+                    <tr class="border-t border-t-[#dce1e5]">
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-120 h-[72px] px-4 py-2 w-[400px] text-[#111518] text-sm font-normal leading-normal">Z</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-240 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">0.0000</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-360 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">0.0000</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-480 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">1.0000</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-600 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">0.0000</td>
+                    </tr>
+                    <tr class="border-t border-t-[#dce1e5]">
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-120 h-[72px] px-4 py-2 w-[400px] text-[#111518] text-sm font-normal leading-normal">
+                        Translation
+                      </td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-240 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">0.0000</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-360 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">0.0000</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-480 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">0.0000</td>
+                      <td class="table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-600 h-[72px] px-4 py-2 w-[400px] text-[#637988] text-sm font-normal leading-normal">1.0000</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <style>
+                          @container(max-width:120px){.table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-120{display: none;}}
+                @container(max-width:240px){.table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-240{display: none;}}
+                @container(max-width:360px){.table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-360{display: none;}}
+                @container(max-width:480px){.table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-480{display: none;}}
+                @container(max-width:600px){.table-cbcc5427-f337-4ef8-a473-c083ad61b18a-column-600{display: none;}}
+              </style>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript to connect to the backend -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Get references to the input fields and the button
+        const xPosInput = document.getElementById('x-pos');
+        const yPosInput = document.getElementById('y-pos');
+        const zPosInput = document.getElementById('z-pos');
+        const rxInput = document.getElementById('rx');
+        const ryInput = document.getElementById('ry');
+        const rzInput = document.getElementById('rz');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resultTable = document.getElementById('result-table').getElementsByTagName('tbody')[0];
+
+        // Add a click event listener to the "Calculate Matrix" button
+        calculateBtn.addEventListener('click', () => {
+          // Create the data payload to send to the backend
+          const data = {
+            x: xPosInput.value,
+            y: yPosInput.value,
+            z: zPosInput.value,
+            rx: rxInput.value,
+            ry: ryInput.value,
+            rz: rzInput.value
+          };
+
+          // Send a POST request to the /calculate endpoint
+          fetch('http://localhost:5000/calculate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          })
+          .then(response => response.json())
+          .then(matrix => {
+            // Check if the backend returned an error
+            if (matrix.error) {
+              console.error('Error:', matrix.error);
+              alert('An error occurred: ' + matrix.error);
+              return;
+            }
+            // Update the result table with the new matrix values
+            updateTable(matrix);
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            alert('Failed to connect to the calculation server.');
+          });
+        });
+
+        // Function to update the HTML table with the calculated matrix
+        function updateTable(matrix) {
+          // There are 4 rows in the table body
+          for (let i = 0; i < 4; i++) {
+            // There are 5 cells per row (label + 4 values)
+            const cells = resultTable.rows[i].cells;
+            for (let j = 1; j < 5; j++) {
+                // Update cell content, formatting numbers to 4 decimal places
+                cells[j].textContent = matrix[i][j-1].toFixed(4);
+            }
+          }
+        }
+      });
+    </script>
+
+  </body>
+</html>
