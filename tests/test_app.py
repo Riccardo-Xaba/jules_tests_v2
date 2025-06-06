@@ -126,4 +126,81 @@ def test_calculate_invalid_input(client):
     # Assert the content of the error message for more specific testing
     assert "Invalid input data" in response_data["error"]
 
+def test_calculate_transformation_matrix_diverse_inputs(client):
+    # Test Case 1: Various non-zero position values
+    data_trans_float = {
+        "x": 1.5, "y": -2.25, "z": 3.75,
+        "rx": 0, "ry": 0, "rz": 0
+    }
+    response_trans_float = client.post('/calculate', data=json.dumps(data_trans_float), content_type='application/json')
+    assert response_trans_float.status_code == 200
+    result_matrix_trans_float = np.array(response_trans_float.get_json())
+    expected_matrix_trans_float = np.array([
+        [1, 0, 0,  1.5],
+        [0, 1, 0, -2.25],
+        [0, 0, 1,  3.75],
+        [0, 0, 0,  1]
+    ])
+    np.testing.assert_allclose(result_matrix_trans_float, expected_matrix_trans_float, atol=1e-7)
+
+    # Test Case 2: Rotation around Z by 30 degrees
+    rz_30_deg = 30
+    rz_30_rad = np.radians(rz_30_deg)
+    cos_30 = np.cos(rz_30_rad)
+    sin_30 = np.sin(rz_30_rad)
+    data_z_rot_30 = {
+        "x": 0, "y": 0, "z": 0,
+        "rx": 0, "ry": 0, "rz": rz_30_deg
+    }
+    response_z_rot_30 = client.post('/calculate', data=json.dumps(data_z_rot_30), content_type='application/json')
+    assert response_z_rot_30.status_code == 200
+    result_matrix_z_rot_30 = np.array(response_z_rot_30.get_json())
+    expected_matrix_z_rot_30 = np.array([
+        [cos_30, -sin_30, 0, 0],
+        [sin_30,  cos_30, 0, 0],
+        [0,       0,      1, 0],
+        [0,       0,      0, 1]
+    ])
+    np.testing.assert_allclose(result_matrix_z_rot_30, expected_matrix_z_rot_30, atol=1e-7)
+
+    # Test Case 3: Rotation around Y by 45 degrees
+    ry_45_deg = 45
+    ry_45_rad = np.radians(ry_45_deg)
+    cos_45 = np.cos(ry_45_rad)
+    sin_45 = np.sin(ry_45_rad)
+    data_y_rot_45 = {
+        "x": 0, "y": 0, "z": 0,
+        "rx": 0, "ry": ry_45_deg, "rz": 0
+    }
+    response_y_rot_45 = client.post('/calculate', data=json.dumps(data_y_rot_45), content_type='application/json')
+    assert response_y_rot_45.status_code == 200
+    result_matrix_y_rot_45 = np.array(response_y_rot_45.get_json())
+    expected_matrix_y_rot_45 = np.array([
+        [cos_45,  0, sin_45, 0],
+        [0,       1, 0,      0],
+        [-sin_45, 0, cos_45, 0],
+        [0,       0, 0,      1]
+    ])
+    np.testing.assert_allclose(result_matrix_y_rot_45, expected_matrix_y_rot_45, atol=1e-7)
+
+    # Test Case 4: Combined diverse translation and rotation (Z-axis by 60 deg)
+    rz_60_deg = 60
+    rz_60_rad = np.radians(rz_60_deg)
+    cos_60 = np.cos(rz_60_rad)
+    sin_60 = np.sin(rz_60_rad)
+    data_combo_60 = {
+        "x": 5, "y": -10, "z": 15,
+        "rx": 0, "ry": 0, "rz": rz_60_deg
+    }
+    response_combo_60 = client.post('/calculate', data=json.dumps(data_combo_60), content_type='application/json')
+    assert response_combo_60.status_code == 200
+    result_matrix_combo_60 = np.array(response_combo_60.get_json())
+    expected_matrix_combo_60 = np.array([
+        [cos_60, -sin_60, 0,  5],
+        [sin_60,  cos_60, 0, -10],
+        [0,       0,      1,  15],
+        [0,       0,      0,  1]
+    ])
+    np.testing.assert_allclose(result_matrix_combo_60, expected_matrix_combo_60, atol=1e-7)
+
 # Placeholder for future tests
