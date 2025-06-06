@@ -203,4 +203,38 @@ def test_calculate_transformation_matrix_diverse_inputs(client):
     ])
     np.testing.assert_allclose(result_matrix_combo_60, expected_matrix_combo_60, atol=1e-7)
 
+    # Test Case 5: Specific complex combined translation and rotation
+    data_specific_combo = {
+        "x": 10, "y": 200, "z": -10,
+        "rx": -13.2, "ry": 77.6, "rz": 90
+    }
+    response_specific_combo = client.post('/calculate', data=json.dumps(data_specific_combo), content_type='application/json')
+    assert response_specific_combo.status_code == 200
+    result_matrix_specific_combo = np.array(response_specific_combo.get_json())
+
+    # Calculate expected matrix
+    rx_rad = np.radians(-13.2)
+    ry_rad = np.radians(77.6)
+    rz_rad = np.radians(90)
+
+    R_x = np.array([[1, 0,           0],
+                    [0, np.cos(rx_rad), -np.sin(rx_rad)],
+                    [0, np.sin(rx_rad),  np.cos(rx_rad)]])
+
+    R_y = np.array([[np.cos(ry_rad),  0, np.sin(ry_rad)],
+                    [0,            1, 0],
+                    [-np.sin(ry_rad), 0, np.cos(ry_rad)]])
+
+    R_z = np.array([[np.cos(rz_rad), -np.sin(rz_rad), 0],
+                    [np.sin(rz_rad),  np.cos(rz_rad), 0],
+                    [0,            0,           1]])
+
+    R = R_z @ R_y @ R_x
+
+    expected_matrix_specific_combo = np.identity(4)
+    expected_matrix_specific_combo[:3, :3] = R
+    expected_matrix_specific_combo[:3, 3] = [10, 200, -10]
+
+    np.testing.assert_allclose(result_matrix_specific_combo, expected_matrix_specific_combo, atol=1e-7)
+
 # Placeholder for future tests
