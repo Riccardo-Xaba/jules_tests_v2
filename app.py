@@ -78,8 +78,15 @@ def calculate_transformation_matrix():
                         [np.sin(rz), np.cos(rz),  0],
                         [0,          0,           1]])
 
-        # Combined rotation matrix (ZYX convention)
-        R = R_z @ R_y @ R_x
+        # Get the rotation convention, default to 'ZYX_extrinsic'
+        convention = data.get('convention', 'ZYX_extrinsic')
+
+        # Combined rotation matrix
+        if convention == 'intrinsic_XYZ':
+            R = R_x @ R_y @ R_z  # Intrinsic XYZ order
+        else:
+            # Default to ZYX extrinsic order (covers 'ZYX_extrinsic', 'extrinsic_XYZ', or unknown)
+            R = R_z @ R_y @ R_x
 
         # --- Homogeneous Transformation Matrix ---
         # Create a 4x4 identity matrix

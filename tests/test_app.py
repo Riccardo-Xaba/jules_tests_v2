@@ -237,4 +237,89 @@ def test_calculate_transformation_matrix_diverse_inputs(client):
 
     np.testing.assert_allclose(result_matrix_specific_combo, expected_matrix_specific_combo, atol=1e-7)
 
+def test_calculate_transformation_matrix_conventions(client):
+    # Test Case 1: intrinsic_XYZ Convention (Simple Rotation)
+    data_intrinsic_simple = {
+        "x": 0, "y": 0, "z": 0, "rx": 90, "ry": 90, "rz": 0, "convention": "intrinsic_XYZ"
+    }
+    response_intrinsic_simple = client.post('/calculate', data=json.dumps(data_intrinsic_simple), content_type='application/json')
+    assert response_intrinsic_simple.status_code == 200
+    result_intrinsic_simple = np.array(response_intrinsic_simple.get_json())
+
+    rx_rad = np.radians(90)
+    ry_rad = np.radians(90)
+    R_x_90 = np.array([[1,0,0], [0,np.cos(rx_rad),-np.sin(rx_rad)], [0,np.sin(rx_rad),np.cos(rx_rad)]])
+    R_y_90 = np.array([[np.cos(ry_rad),0,np.sin(ry_rad)], [0,1,0], [-np.sin(ry_rad),0,np.cos(ry_rad)]])
+    R_intrinsic_simple = R_x_90 @ R_y_90
+    expected_intrinsic_simple = np.identity(4)
+    expected_intrinsic_simple[:3,:3] = R_intrinsic_simple
+    np.testing.assert_allclose(result_intrinsic_simple, expected_intrinsic_simple, atol=1e-7)
+
+    # Test Case 2: extrinsic_XYZ Convention (Simple Rotation) - Should behave like ZYX extrinsic default
+    data_extrinsic_simple = {
+        "x": 0, "y": 0, "z": 0, "rx": 90, "ry": 0, "rz": 0, "convention": "extrinsic_XYZ"
+    }
+    response_extrinsic_simple = client.post('/calculate', data=json.dumps(data_extrinsic_simple), content_type='application/json')
+    assert response_extrinsic_simple.status_code == 200
+    result_extrinsic_simple = np.array(response_extrinsic_simple.get_json())
+
+    # R = R_z(0) @ R_y(0) @ R_x(90) = R_x(90)
+    rx_rad_90 = np.radians(90)
+    # R_x_90 is already defined above
+    # R_y_0 = np.identity(3) # Or calculate explicitly
+    # R_z_0 = np.identity(3) # Or calculate explicitly
+    # R_extrinsic_simple = R_z_0 @ R_y_0 @ R_x_90
+    expected_extrinsic_simple_rot = np.array([
+        [1, 0,  0],
+        [0, 0, -1],
+        [0, 1,  0]
+    ])
+    expected_extrinsic_simple = np.identity(4)
+    expected_extrinsic_simple[:3,:3] = expected_extrinsic_simple_rot
+    np.testing.assert_allclose(result_extrinsic_simple, expected_extrinsic_simple, atol=1e-7)
+
+    # Test Case 3: Default Convention (ZYX Extrinsic - like current behavior)
+    data_default_simple = { # No convention specified
+        "x": 0, "y": 0, "z": 0, "rx": 0, "ry": 0, "rz": 90
+    }
+    response_default_simple = client.post('/calculate', data=json.dumps(data_default_simple), content_type='application/json')
+    assert response_default_simple.status_code == 200
+    result_default_simple = np.array(response_default_simple.get_json())
+
+    rz_rad_90 = np.radians(90)
+    expected_default_simple_rot = np.array([ # R_z(90)
+        [np.cos(rz_rad_90), -np.sin(rz_rad_90), 0],
+        [np.sin(rz_rad_90),  np.cos(rz_rad_90), 0],
+        [0,                0,               1]
+    ])
+    expected_default_simple = np.identity(4)
+    expected_default_simple[:3,:3] = expected_default_simple_rot
+    np.testing.assert_allclose(result_default_simple, expected_default_simple, atol=1e-7)
+
+    # Test Case 4: intrinsic_XYZ with Translation
+    data_intrinsic_trans = {
+        "x": 1, "y": 2, "z": 3, "rx": 90, "ry": 90, "rz": 0, "convention": "intrinsic_XYZ"
+    }
+    response_intrinsic_trans = client.post('/calculate', data=json.dumps(data_intrinsic_trans), content_type='application/json')
+    assert response_intrinsic_trans.status_code == 200
+    result_intrinsic_trans = np.array(response_intrinsic_trans.get_json())
+    # R_intrinsic_simple is already R_x(90) @ R_y(90)
+    expected_intrinsic_trans = np.identity(4)
+    expected_intrinsic_trans[:3,:3] = R_intrinsic_simple # Rotation from Test Case 1
+    expected_intrinsic_trans[:3,3] = [1,2,3]
+    np.testing.assert_allclose(result_intrinsic_trans, expected_intrinsic_trans, atol=1e-7)
+
+    # Test Case 5: extrinsic_XYZ with Translation
+    data_extrinsic_trans = {
+        "x": 1, "y": 2, "z": 3, "rx": 90, "ry": 0, "rz": 0, "convention": "extrinsic_XYZ"
+    }
+    response_extrinsic_trans = client.post('/calculate', data=json.dumps(data_extrinsic_trans), content_type='application/json')
+    assert response_extrinsic_trans.status_code == 200
+    result_extrinsic_trans = np.array(response_extrinsic_trans.get_json())
+    # expected_extrinsic_simple_rot is R_x(90) from Test Case 2
+    expected_extrinsic_trans = np.identity(4)
+    expected_extrinsic_trans[:3,:3] = expected_extrinsic_simple_rot # Rotation from Test Case 2
+    expected_extrinsic_trans[:3,3] = [1,2,3]
+    np.testing.assert_allclose(result_extrinsic_trans, expected_extrinsic_trans, atol=1e-7)
+
 # Placeholder for future tests
